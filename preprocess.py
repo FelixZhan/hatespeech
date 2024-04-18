@@ -26,8 +26,9 @@ def main():
     df_english = load_and_clean_english_csv(english_path + "\english.csv")
 
     df_concatenated = pd.concat([df_hate_speech, df_english], ignore_index=True)
-    df_concatenated.to_csv(english_path + "\combined_english.csv")
-    print(df_concatenated.head(10))
+    for i in [0.10, 0.15, 0.25]:
+      df_reduced = df_concatenated.sample(frac=i, random_state=42)  # to make data faster
+      df_reduced.to_csv(english_path + f"\combined_english_{i}.csv")
 
 if __name__ == "__main__":
     main()
